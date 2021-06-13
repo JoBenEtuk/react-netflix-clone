@@ -37,7 +37,7 @@ function Row(props) {
             className="row__poster row__posterLarge"
             src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
             alt={movie.original_name}
-            key={movie.original_name}
+            key={movie.poster_path}
           />
         ))}
       </div>
