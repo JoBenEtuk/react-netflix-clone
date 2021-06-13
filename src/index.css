@@ -1,4 +1,3 @@
-  
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -85,7 +84,6 @@ code {
 .banner__description {
   font-size: 16px;
   height: 80px;
-  line-height: 1.3;
   line-height: 24px;
   max-width: 360px;
   padding-top: 1rem;
@@ -359,4 +357,19 @@ code {
 
 .detail__description-content {
   font-size: 14px;
+}
+
+@media screen and (max-width: 450px) {
+  .banner__description {
+    width: 90%;
+  }
+
+  .banner__title {
+    font-size: 2.5rem;
+  }
+
+  .login-body__form {
+    max-height: 100vh;
+    height: 100%;
+  }
 }
