@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 function Nav() {
   const username = useSelector((state) => state.user);
-  console.log(username);
   return (
     <div className="nav false">
       <Link to="/">

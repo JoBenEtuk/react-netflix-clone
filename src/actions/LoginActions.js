@@ -1,6 +1,4 @@
-// import action types.
 import * as loadingActionTypes from "./LoadingActionTypes";
-// import login service.
 import * as loginService from "../services/LoginService";
 
 export const login = (email, password) => async (dispatch) => {

@@ -25,7 +25,6 @@ function LoginForm({ showModal }) {
     return validator.isEmail(email) && validator.isLength(password, { min: 6 });
   };
 
-  // USING REDUX
   const login = () => {
     if (isUserCredentialsValid()) {
       // dispatch(loginActions.login(email, password));
@@ -93,5 +92,5 @@ function LoginForm({ showModal }) {
     </div>
   );
 }
-// export LoginForm component.
+
 export default withModal(LoginForm);
