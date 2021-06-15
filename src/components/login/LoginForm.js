@@ -1,48 +1,54 @@
-// import react.
 import { useState } from "react";
-// import use dispatch to dispatch action to the store.
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import validator from "validator";
+import { firebaseAuth } from "../../firebase/firebase";
+
+import withModal from "../modal/Modal";
 // import actions.
 // import * as loginActions from "../../actions/LoginActions";
-import * as loginActionTypes from "../../actions/LoginActionTypes";
+// import * as loginActionTypes from "../../actions/LoginActionTypes";
 
-/**
- * create LoginForm component.
- */
-function LoginForm() {
-  // create email and password state to store user's credentials.
+function LoginForm({ showModal }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  // create dispatch instance to dispatch action to the store.
-  const dispatch = useDispatch();
-  /**
-   * handle event when the user clicks on "Login" button.
-   */
-  const login = () => {
-    // dispatch(loginActions.login(email, password));
-    dispatch({ type: loginActionTypes.LOGIN, payload: { email, password } });
+  // const dispatch = useDispatch();
+
+  const isUserCredentialsValid = () => {
+    return validator.isEmail(email) && validator.isLength(password, { min: 6 });
   };
 
-  /**
-   * update email state when the user inputs the email field.
-   * @param {*} e - synthetic event to get the latest email's value.
-   */
+  //USING REDUX
+  // const login = () => {
+  //   // dispatch(loginActions.login(email, password));
+  //   dispatch({ type: loginActionTypes.LOGIN, payload: { email, password } });
+  // };
+
+  // USING HOC
+  const login = () => {
+    if (isUserCredentialsValid()) {
+      firebaseAuth
+        .signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(`signed in user`);
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      showModal({ message: "Your email or password is incorrect" });
+    }
+  };
+
   const onEmailChanged = (e) => {
-    // get email value.
     const updatedEmail = e.target.value;
-    // update email state.
     setEmail(() => updatedEmail);
   };
 
-  /**
-   * update password state when the user input the password field.
-   * @param {*} e - synthetic event to get the latest password's value.
-   */
   const onPasswordChanged = (e) => {
-    // get password value.
     const updatedPassword = e.target.value;
-    // update password state.
     setPassword(() => updatedPassword);
   };
 
@@ -94,4 +100,4 @@ function LoginForm() {
   );
 }
 // export LoginForm component.
-export default LoginForm;
+export default withModal(LoginForm);
