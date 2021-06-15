@@ -182,7 +182,12 @@ code {
   color: #fff;
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
+}
+
+.login-body p {
+  color: #fff;
+  margin-bottom: 14px;
 }
 
 .login-body__input input {

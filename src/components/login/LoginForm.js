@@ -49,6 +49,9 @@ function LoginForm({ showModal }) {
     <div className="login-body">
       <div className="login-body__form">
         <h1>Sign In</h1>
+        <p>
+          Use <strong>abc@ab.com</strong> as mail and password for demo
+        </p>
         <div className="login-body__input mb-16">
           <input
             type="text"
