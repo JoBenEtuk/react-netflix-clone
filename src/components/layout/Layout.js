@@ -2,13 +2,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import custom components.
 import Home from "../home/Home";
 import Login from "../login/Login";
-import Loading from "../loading/Loading";
-// import useSelector to get state from the store.
-import { useSelector } from "react-redux";
 
 function Layout() {
-  const loading = useSelector((state) => state.loading);
-
   return (
     <>
       <Router>
@@ -25,7 +20,6 @@ function Layout() {
           {/* End Login Route */}
         </Switch>
       </Router>
-      {loading.isLoadingShown && <Loading />}
     </>
   );
 }

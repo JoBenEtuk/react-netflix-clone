@@ -1,42 +1,36 @@
-import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import validator from "validator";
-import { firebaseAuth } from "../../firebase/firebase";
 
 import withModal from "../modal/Modal";
+
 // import actions.
 // import * as loginActions from "../../actions/LoginActions";
-// import * as loginActionTypes from "../../actions/LoginActionTypes";
+import * as loginActionTypes from "../../actions/LoginActionTypes";
+import * as UserActionTypes from "../../actions/UserActionTypes";
 
 function LoginForm({ showModal }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const username = useSelector((state) => state.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  // const dispatch = useDispatch();
+  useEffect(() => {
+    username && username.user && history.push("/");
+  }, [username, history]);
 
   const isUserCredentialsValid = () => {
     return validator.isEmail(email) && validator.isLength(password, { min: 6 });
   };
 
-  //USING REDUX
-  // const login = () => {
-  //   // dispatch(loginActions.login(email, password));
-  //   dispatch({ type: loginActionTypes.LOGIN, payload: { email, password } });
-  // };
-
-  // USING HOC
+  // USING REDUX
   const login = () => {
     if (isUserCredentialsValid()) {
-      firebaseAuth
-        .signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(`signed in user`);
-          console.log(user);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // dispatch(loginActions.login(email, password));
+      dispatch({ type: loginActionTypes.LOGIN, payload: { email, password } });
+      dispatch({ type: UserActionTypes.USER, payload: email });
     } else {
       showModal({ message: "Your email or password is incorrect" });
     }

@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Nav from "../nav/Nav";
 import Header from "../header/Header";
 import Row from "../row/Row";
+import Loading from "../loading/Loading";
 import Detail from "../detail/Detail";
 
 function Home() {
   const [selectedMovie, setSelectedMovie] = useState();
+  const username = useSelector((state) => state.user);
+  const loading = useSelector((state) => state.loading);
+  const history = useHistory();
   const selectMovie = (movie) => {
     setSelectedMovie(() => movie);
   };
   const closeDetail = () => {
     setSelectedMovie(null);
   };
+
+  useEffect(() => {
+    !username.user && history.push("/login");
+  }, [username.user, history]);
+
   return (
     <>
       <div className="app">
@@ -54,6 +65,7 @@ function Home() {
       {selectedMovie && (
         <Detail movie={selectedMovie} onDetailClosed={closeDetail} />
       )}
+      {loading.isLoadingShown && <Loading />}
     </>
   );
 }

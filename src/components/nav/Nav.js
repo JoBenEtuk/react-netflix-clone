@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Nav() {
+  const username = useSelector((state) => state.user);
+  console.log(username);
   return (
     <div className="nav false">
       <Link to="/">
@@ -10,6 +13,9 @@ function Nav() {
           alt=""
         />
       </Link>
+      {username && username.user && (
+        <span className="nav__greeting">Hello, {username.user}</span>
+      )}
       <Link to="/">
         <img
           className="nav__avatar"
